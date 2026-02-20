@@ -13,7 +13,7 @@ func main() {
 
 	log.Println("Starting STUN Server")
 	buf := make([]byte, 1500)
-	go internal.HandlePacket(buf, conn)
+	go internal.PacketHandler(buf, conn)
 
 	select {}
 }

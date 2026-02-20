@@ -1,20 +1,19 @@
 package main
 
-import "net"
+import (
+	"log"
+	"net"
+
+	"github.com/YacineMK/stun/internal"
+)
 
 func main() {
-	conn, err := net.Dial("udp", "localhost:3478")
+	serverAddr := "127.0.0.1:3478"
+	conn, err := net.Dial("udp", serverAddr)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer conn.Close()
 
-	bytes := make([]byte, 1024)
-	for {
-		n, err := conn.Read(bytes)
-		if err != nil {
-			panic(err)
-		}
-		println(string(bytes[:n]))
-	}
+	internal.ClientHandler(serverAddr, conn)
 }
